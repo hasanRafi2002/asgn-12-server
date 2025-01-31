@@ -12,7 +12,7 @@ dotenv.config();
 
 // Initialize Express app
 const app = express();
-app.use(cors());
+app.use(cors({ origin: "https://rafi-a12.netlify.app/" }));
 app.use(express.json());
 app.use(bodyParser.json());
 
