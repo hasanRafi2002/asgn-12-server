@@ -12,9 +12,25 @@ dotenv.config();
 
 // Initialize Express app
 const app = express();
-app.use(cors({ origin: "https://rafi-a12.netlify.app/" }));
+
 app.use(express.json());
 app.use(bodyParser.json());
+
+
+const allowedOrigins = ["https://rafi-a12.netlify.app", "http://localhost:5173"];
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+}));
+
+
+
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
